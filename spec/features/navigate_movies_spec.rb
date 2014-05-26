@@ -11,7 +11,7 @@ describe "Navigating movies" do
     expect(current_path).to eq(movies_path)
   end
   it "allows navigation from the movie listing page to the detail page" do
-    movie = Movie.create(movie_attributeupp)
+    movie = Movie.create(movie_attributes)
 
     visit movies_url
 
