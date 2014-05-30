@@ -17,16 +17,13 @@ describe "Creating a new movie" do
     fill_in "Director", with: "The ever-creative director"
     fill_in "Duration", with: "123 min"
     fill_in "Image file name", with: "movie.png"
-
-    # If you're taking advantage of the HTML 5 date field in Chrome, 
-    # you'll need to use 'fill_in' rather than 'select'
-    # fill_in "Released on", with: (Time.now.year - 1).to_s
-
     click_button 'Create Movie'
 
     expect(current_path).to eq(movie_path(Movie.last))   
 
     expect(page).to have_text('New Movie Title')
+
+    expect(page).to have_text('Movie successfully created!')
   end
 
   it "does not save the movie if it's invalid" do
