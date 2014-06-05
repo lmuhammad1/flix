@@ -93,4 +93,5 @@ describe "A user" do
 
     expect(user.password_digest).to be_present
   end
-end
+
+  end
