@@ -9,7 +9,7 @@ describe "Signing in" do
 
     expect(current_path).to eq(new_session_path)
 
-    expect(page).to have_field("Email")
+    expect(page).to have_field("Email or username")
     expect(page).to have_field("Password")
   end
 
@@ -20,7 +20,7 @@ describe "Signing in" do
 
     click_link 'Sign In'
 
-    fill_in "Email", with: user.email
+    fill_in "Email or username", with: user.email
     fill_in "Password", with: user.password
 
     click_button 'Sign In'
@@ -37,7 +37,7 @@ describe "Signing in" do
 
     click_link 'Sign In'
 
-    fill_in "Email", with: user.email
+    fill_in "Email or username", with: user.email
     fill_in "Password", with: "no match"
 
     click_button 'Sign In'
