@@ -1,41 +1,41 @@
 require 'spec_helper'
 
 describe "A user" do
-      
+
   it "requires a name" do
     user = User.new(name: "")
-    
+
     expect(user.valid?).to be_false
     expect(user.errors[:name].any?).to be_true
   end
-  
+
   it "requires an email" do
     user = User.new(email: "")
-    
+
     expect(user.valid?).to be_false
     expect(user.errors[:email].any?).to be_true
   end
-      
+
   it "accepts properly formatted email addresses" do
     emails = %w[user@example.com first.last@example.com]
     emails.each do |email|
       user = User.new(email: email)
-      
+
       expect(user.valid?).to be_false
       expect(user.errors[:email].any?).to be_false
     end
   end
-  
+
   it "rejects improperly formatted email addresses" do
     emails = %w[@ user@ @example.com]
     emails.each do |email|
       user = User.new(email: email)
-      
+
       expect(user.valid?).to be_false
       expect(user.errors[:email].any?).to be_true
     end
   end
-  
+
   it "requires a unique, case insensitive email address" do
     user1 = User.create!(user_attributes)
 
@@ -43,13 +43,13 @@ describe "A user" do
     expect(user2.valid?).to be_false
     expect(user2.errors[:email].first).to eq("has already been taken")
   end
-  
+
   it "is valid with example attributes" do
     user = User.new(user_attributes)
-    
+
     expect(user.valid?).to be_true
   end
-  
+
   it "requires a password" do
     user = User.new(password: "")
 
@@ -90,7 +90,7 @@ describe "A user" do
 
     expect(user.password_digest).to be_present
   end
-  
+
   describe "authenticate" do
     before do
       @user = User.create!(user_attributes)
@@ -108,7 +108,7 @@ describe "A user" do
       expect(User.authenticate(@user.email, @user.password)).to eq(@user)
     end
   end
-  
+
   it "has reviews" do
     user = User.new(user_attributes)
     movie1 = Movie.new(movie_attributes(title: "Iron Man"))
@@ -117,12 +117,24 @@ describe "A user" do
     review1 = movie1.reviews.new(stars: 5, comment: "Two thumbs up!")
     review1.user = user
     review1.save!
-    
+
     review2 = movie2.reviews.new(stars: 3, comment: "Cool!")
     review2.user = user
     review2.save!
-    
+
     expect(user.reviews).to include(review1)
     expect(user.reviews).to include(review2)
+  end
+
+  it "has favorite movies" do
+    user = User.new(user_attributes)
+    movie1 = Movie.new(movie_attributes(title: "Iron Man"))
+    movie2 = Movie.new(movie_attributes(title: "Superman"))
+
+    user.favorites.new(movie: movie1)
+    user.favorites.new(movie: movie2)
+
+    expect(user.favorite_movies).to include(movie1)
+    expect(user.favorite_movies).to include(movie2)
   end
 end
