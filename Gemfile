@@ -50,3 +50,4 @@ group :production do
   gem 'pg'
 end
 
+gem 'rails-erd', github: 'paulwittmann/rails-erd', branch: 'mavericks'

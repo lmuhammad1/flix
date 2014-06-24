@@ -5,6 +5,7 @@ describe "Creating a new movie" do
   before do
     admin = User.create!(user_attributes(admin: true))
     sign_in(admin)
+
   end
 
   it "saves the movie and shows the new movie's details" do    
@@ -24,12 +25,15 @@ describe "Creating a new movie" do
     fill_in "Duration", with: "123 min"
     fill_in "Image file name", with: "movie.png"
     click_button 'Create Movie'
+ 
 
     expect(current_path).to eq(movie_path(Movie.last))   
 
     expect(page).to have_text('New Movie Title')
 
     expect(page).to have_text('Movie successfully created!')
+
+     
   end
 
   it "does not save the movie if it's invalid" do
